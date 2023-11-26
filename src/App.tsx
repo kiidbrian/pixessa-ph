@@ -1,35 +1,39 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import "./App.css";
+import {
+  createBrowserRouter,
+  createRoutesFromElements,
+  Route,
+  RouterProvider,
+} from "react-router-dom";
+import RootLayout from "./layouts/RootLayout";
+import LandingPage from "./pages/LandingPage";
+import SignUpPage from "./pages/SignUpPage";
+import WelcomePage from "./pages/WelcomePage";
+import ClientGalleriesPage from "./pages/ClientGalleriesPage";
+import CreateCollectionPage from "./pages/CreateCollectionPage";
+import GallaryPage from "./pages/GallaryPage";
+import LoginPage from "./pages/LoginPage";
+import AccessGalleryPage from "./pages/AccessGalleryPage";
+import GalleryLive from "./pages/GalleryLive";
+
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <Route path="/" element={<RootLayout />}>
+      <Route index element={<LandingPage />} />
+      <Route path="sign-up" element={<SignUpPage />} />
+      <Route path="login" element={<LoginPage />} />
+      <Route path="welcome" element={<WelcomePage />} />
+      <Route path="client-galleries" element={<ClientGalleriesPage />} />
+      <Route path="create-collection" element={<CreateCollectionPage />} />
+      <Route path="gallery" element={<GallaryPage />} />
+      <Route path="access-gallery" element={<AccessGalleryPage />} />
+      <Route path="gallery-live" element={<GalleryLive />} />
+    </Route>
+  )
+);
 
 function App() {
-  const [count, setCount] = useState(0)
-
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+  return <RouterProvider router={router} />;
 }
 
-export default App
+export default App;

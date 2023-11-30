@@ -2,7 +2,7 @@ import Input from "../components/Input";
 import { IoSearch } from "react-icons/io5";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import wedding_px from "../assets/wedding_px/_MG_0971.jpg";
-import "./clientGalleries.css";
+
 const ClientGalleriesPage = () => {
   return (
     <div className="padding-x-1 bg-[#F0F0F0] flex flex-col items-center pt-6 pb-20 h-fit">

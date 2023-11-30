@@ -1,4 +1,3 @@
-import "./App.css";
 import {
   createBrowserRouter,
   createRoutesFromElements,
@@ -15,6 +14,8 @@ import GallaryPage from "./pages/GallaryPage";
 import LoginPage from "./pages/LoginPage";
 import AccessGalleryPage from "./pages/AccessGalleryPage";
 import GalleryLive from "./pages/GalleryLive";
+import ProtectedRoute from "./components/ProtectedRoute";
+import { AuthContextProvider } from "./contexts/AuthContextProvider";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -24,7 +25,9 @@ const router = createBrowserRouter(
       <Route path="login" element={<LoginPage />} />
       <Route path="welcome" element={<WelcomePage />} />
       <Route path="client-galleries" element={<ClientGalleriesPage />} />
-      <Route path="create-collection" element={<CreateCollectionPage />} />
+      <Route element={<ProtectedRoute />}>
+        <Route path="create-collection" element={<CreateCollectionPage />} />
+      </Route>
       <Route path="gallery" element={<GallaryPage />} />
       <Route path="access-gallery" element={<AccessGalleryPage />} />
       <Route path="gallery-live" element={<GalleryLive />} />
@@ -33,7 +36,11 @@ const router = createBrowserRouter(
 );
 
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <AuthContextProvider>
+      <RouterProvider router={router} />
+    </AuthContextProvider>
+  );
 }
 
 export default App;

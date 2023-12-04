@@ -2,8 +2,10 @@ import Input from "../components/Input";
 import { IoSearch } from "react-icons/io5";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import wedding_px from "../assets/wedding_px/_MG_0971.jpg";
+import { useNavigate } from "react-router-dom";
 
 const ClientGalleriesPage = () => {
+  const navigate = useNavigate();
   return (
     <div className="padding-x-1 bg-[#F0F0F0] flex flex-col items-center pt-6 pb-20 h-fit">
       <div className="w-[60%] h-fit relative">
@@ -51,7 +53,7 @@ const ClientGalleriesPage = () => {
           ].map((iter) => {
             return (
               <div
-                className="w-full h-[350px] bg-transparent flex flex-col"
+                className="w-full h-[350px] bg-transparent flex flex-col cursor-pointer relative group"
                 key={`key-${iter}`}
               >
                 <img
@@ -59,6 +61,17 @@ const ClientGalleriesPage = () => {
                   alt="wedding_px"
                   className="object-cover w-full h-[82%]"
                 />
+
+                <div
+                  onClick={() => {
+                    navigate("/create-collection");
+                  }}
+                  className="absolute inset-x-0 top-0 bottom-[18%] flex items-center justify-center opacity-0 group-hover:opacity-60 group-hover:bg-black transition-opacity"
+                >
+                  <div className="text-white text-center">
+                    <p className="text-2xl">EDIT</p>
+                  </div>
+                </div>
                 <div className="text-center bg-transparent flex flex-col justify-center items-center h-[18%]">
                   <p className="text-sm font-semibold">Kwesi & Ama</p>
                   <p className="text-[9px] text-[#A29A9A] mt-[3.5px]">

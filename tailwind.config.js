@@ -4,6 +4,12 @@ export default {
   theme: {
     screens: {
       //MIN
+      "md-xxs-min": "320px",
+
+      "md-xs-min": "480px",
+
+      "md-sm-min": "640px",
+
       "md-md-min": "769px",
 
       "md-lg-min": "961px",

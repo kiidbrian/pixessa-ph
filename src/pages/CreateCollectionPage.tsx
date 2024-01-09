@@ -1,12 +1,41 @@
-import Input from "../components/Input";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import { LuPenLine } from "react-icons/lu";
-import { FaPlus } from "react-icons/fa";
 import coverPhoto from "../assets/wedding_px/gettyimages.jpeg";
-import GridItemOne from "../components/GridItemOne";
+import CollectionSet from "../components/CollectionSet";
+import InputGroup1 from "../components/InputGroup1";
+import InputGroup2 from "../components/InputGroup2";
+import { data } from "../json/dummyData";
+import Select, { OnChangeValue, StylesConfig } from "react-select";
+
+type OptionType = {
+  value: string;
+  label: string;
+};
+
+const customStyles: StylesConfig<OptionType, true> = {
+  control: (provided) => ({
+    ...provided,
+    height: "65px", // Adjust the height as needed
+  }),
+};
 
 const CreateCollectionPage = () => {
   const editMode = true;
+  const collections = ["WEDDING", "ENGAGEMENT", "PRE-WEDDING"];
+  const options: OptionType[] = [
+    { value: "wedding", label: "Wedding" },
+    { value: "pre-wedding", label: "Pre-Wedding" },
+    { value: "engagement", label: "Engagement" },
+  ];
+
+  const handleSelectChange = (
+    selectedOption: OnChangeValue<OptionType, true>
+  ) => {
+    if (selectedOption) {
+      console.log("handleSelectChange -> ", selectedOption);
+    }
+  };
+
   return (
     <div className="h-fit flex justify-between md-lg-max:flex-col">
       <div className="w-[35%] md-lg-max:w-full flex flex-col items-center bg-[#E6E6E6] pb-32 md-lg-max:pb-16">
@@ -16,18 +45,7 @@ const CreateCollectionPage = () => {
 
         <form className="flex flex-col w-[90%] md-lg-max:w-[70%] items-start mt-5">
           {editMode ? (
-            <div className="w-full mt-2">
-              <label
-                htmlFor="galleryName"
-                className="text-gray-500 mt-2 text-xs font-semibold"
-              >
-                Gallery Name
-              </label>
-              <div className="flex justify-between mt-4 w-full h-[55px] text-[#487677]">
-                <span className="text-sm">Kwasi & Ama</span>
-                <LuPenLine size={20} />
-              </div>
-            </div>
+            <InputGroup1 label="Gallery Name" inputValue="Kwesi & Ama" />
           ) : (
             <div className="w-full mt-2">
               <label
@@ -36,7 +54,7 @@ const CreateCollectionPage = () => {
               >
                 Gallery Name
               </label>
-              <Input
+              <input
                 type="text"
                 className="mt-4 w-full h-[65px] p-5 bg-[#FCFCFC]"
                 placeholder=""
@@ -46,18 +64,7 @@ const CreateCollectionPage = () => {
           )}
 
           {editMode ? (
-            <div className="w-full mt-10">
-              <label
-                htmlFor="galleryName"
-                className="text-gray-500 mt-2 text-xs font-semibold"
-              >
-                Project Date
-              </label>
-              <div className="flex justify-between mt-4 w-full h-[55px] text-[#487677]">
-                <span className="text-sm">29th October, 2023</span>
-                <LuPenLine size={20} />
-              </div>
-            </div>
+            <InputGroup1 label="Project Date" inputValue="29th October, 2023" />
           ) : (
             <div className="w-full mt-10">
               <label
@@ -66,7 +73,7 @@ const CreateCollectionPage = () => {
               >
                 Project Name
               </label>
-              <Input
+              <input
                 type="text"
                 className="mt-4 w-full h-[65px] p-5 bg-[#FCFCFC]"
                 placeholder=""
@@ -76,25 +83,7 @@ const CreateCollectionPage = () => {
           )}
 
           {editMode ? (
-            <div className="w-full mt-10">
-              <label
-                htmlFor="galleryName"
-                className="text-gray-500 mt-2 text-xs font-semibold"
-              >
-                Client Name
-              </label>
-              <div className="flex justify-between mt-4 w-full h-[55px] text-[#487677]">
-                <span className="text-sm">Kwaku Baidoo</span>
-                <div className="flex">
-                  <span className="mr-3">
-                    <FaPlus size={20} />
-                  </span>
-                  <span>
-                    <LuPenLine size={20} />
-                  </span>
-                </div>
-              </div>
-            </div>
+            <InputGroup2 label="Client Name" dataArray={data} infoType="name" />
           ) : (
             <div className="w-full mt-10">
               <label
@@ -103,7 +92,7 @@ const CreateCollectionPage = () => {
               >
                 Client Name
               </label>
-              <Input
+              <input
                 type="text"
                 className="mt-4 w-full h-[65px] p-5 bg-[#FCFCFC]"
                 placeholder=""
@@ -113,25 +102,11 @@ const CreateCollectionPage = () => {
           )}
 
           {editMode ? (
-            <div className="w-full mt-10">
-              <label
-                htmlFor="galleryName"
-                className="text-gray-500 mt-2 text-xs font-semibold"
-              >
-                Client Email
-              </label>
-              <div className="flex justify-between mt-4 w-full h-[55px] text-[#487677]">
-                <span className="text-sm">kwakubaidoo@gmail.com</span>
-                <div className="flex">
-                  <span className="mr-3">
-                    <FaPlus size={20} />
-                  </span>
-                  <span>
-                    <LuPenLine size={20} />
-                  </span>
-                </div>
-              </div>
-            </div>
+            <InputGroup2
+              label="Client Email"
+              dataArray={data}
+              infoType="email"
+            />
           ) : (
             <div className="w-full mt-10">
               <label
@@ -140,7 +115,7 @@ const CreateCollectionPage = () => {
               >
                 Client Email
               </label>
-              <Input
+              <input
                 type="text"
                 className="mt-4 w-full h-[65px] p-5 bg-[#FCFCFC]"
                 placeholder=""
@@ -156,12 +131,22 @@ const CreateCollectionPage = () => {
             >
               Add Tag
             </label>
-            <Input
+
+            <Select
+              options={options}
+              styles={customStyles}
+              className="mt-4 w-full bg-[#FCFCFC] text-xs"
+              onChange={handleSelectChange}
+              isMulti={true}
+              placeholder="Select"
+            />
+
+            {/* <input
               type="text"
               className="mt-4 w-full h-[65px] p-5 bg-[#FCFCFC]"
               placeholder=""
               id="galleryName"
-            />
+            /> */}
             <p className="text-[10px] text-[#707070] mt-2">
               Lorem ipsum dolor sit amet consectetur adipisicing elit.
               Cupiditate, asperiores.
@@ -175,7 +160,7 @@ const CreateCollectionPage = () => {
             >
               Expiry Date
             </label>
-            <Input
+            <input
               type="text"
               className="mt-4 w-full h-[65px] p-5 bg-[#FCFCFC]"
               placeholder=""
@@ -207,7 +192,7 @@ const CreateCollectionPage = () => {
                     <span className="text-sm">WEDDING</span>
                     <div className="flex">
                       <span>
-                        <LuPenLine size={20} />
+                        <LuPenLine className="cursor-pointer" size={20} />
                       </span>
                     </div>
                   </div>
@@ -222,17 +207,11 @@ const CreateCollectionPage = () => {
               </div>
               <div className="flex justify-between mt-8 w-[95%] items-end">
                 <div className="w-[65%] relative">
-                  {/* <label
-                    htmlFor="galleryName"
-                    className="w-full text-gray-500 mt-10 text-xs font-semibold"
-                  >
-                    Session Name
-                  </label> */}
                   <div className="flex justify-between mt-4 w-full h-[65px] text-[#487677] items-center">
                     <span className="text-sm">ENGAGEMENT</span>
                     <div className="flex">
                       <span>
-                        <LuPenLine size={20} />
+                        <LuPenLine className="cursor-pointer" size={20} />
                       </span>
                     </div>
                   </div>
@@ -247,17 +226,11 @@ const CreateCollectionPage = () => {
               </div>
               <div className="flex justify-between mt-8 w-[95%] items-end">
                 <div className="w-[65%] relative">
-                  {/* <label
-                    htmlFor="galleryName"
-                    className="w-full text-gray-500 mt-10 text-xs font-semibold"
-                  >
-                    Session Name
-                  </label> */}
                   <div className="flex justify-between mt-4 w-full h-[65px] text-[#487677] items-center">
                     <span className="text-sm">PRE-WEDDING</span>
                     <div className="flex">
                       <span>
-                        <LuPenLine size={20} />
+                        <LuPenLine className="cursor-pointer" size={20} />
                       </span>
                     </div>
                   </div>
@@ -273,13 +246,7 @@ const CreateCollectionPage = () => {
 
               <div className="flex justify-between mt-8 w-[95%] items-end">
                 <div className="w-[65%] relative">
-                  {/* <label
-                    htmlFor="galleryName"
-                    className="w-full text-gray-500 mt-10 text-xs font-semibold"
-                  >
-                    Session Name
-                  </label> */}
-                  <Input
+                  <input
                     type="text"
                     className="mt-4 w-full h-[65px] p-5 bg-[#FCFCFC]"
                     placeholder=""
@@ -308,7 +275,7 @@ const CreateCollectionPage = () => {
                   >
                     Session Name
                   </label>
-                  <Input
+                  <input
                     type="text"
                     className="mt-4 w-full h-[65px] p-5 bg-[#FCFCFC]"
                     placeholder=""
@@ -333,7 +300,7 @@ const CreateCollectionPage = () => {
             <div className="flex mt-5 items-center">
               <input
                 type="checkbox"
-                className="h-5 w-5 text-blue-600 focus:ring-blue-400 border-gray-300 rounded-md focus:outline-none focus:border-blue-300"
+                className="cursor-pointer h-5 w-5 text-blue-600 focus:ring-blue-400 border-gray-300 rounded-md focus:outline-none focus:border-blue-300"
               />
               <span className="ml-5">
                 Request email before entering the gallery
@@ -342,7 +309,7 @@ const CreateCollectionPage = () => {
             <div className="flex mt-5 items-center">
               <input
                 type="checkbox"
-                className="h-5 w-5 text-blue-600 focus:ring-blue-400 border-gray-300 rounded-md focus:outline-none focus:border-blue-300"
+                className="cursor-pointer h-5 w-5 text-blue-600 focus:ring-blue-400 border-gray-300 rounded-md focus:outline-none focus:border-blue-300"
               />
               <span className="ml-5">
                 Request email before entering the gallery
@@ -353,14 +320,14 @@ const CreateCollectionPage = () => {
             <div className="flex mt-5 items-center">
               <input
                 type="checkbox"
-                className="h-5 w-5 text-blue-600 focus:ring-blue-400 border-gray-300 rounded-md focus:outline-none focus:border-blue-300"
+                className="cursor-pointer h-5 w-5 text-blue-600 focus:ring-blue-400 border-gray-300 rounded-md focus:outline-none focus:border-blue-300"
               />
               <span className="ml-5">Allow free High-Res downloads</span>
             </div>
             <div className="flex mt-5 items-center">
               <input
                 type="checkbox"
-                className="h-5 w-5 text-blue-600 focus:ring-blue-400 border-gray-300 rounded-md focus:outline-none focus:border-blue-300"
+                className="cursor-pointer h-5 w-5 text-blue-600 focus:ring-blue-400 border-gray-300 rounded-md focus:outline-none focus:border-blue-300"
               />
               <span className="ml-5">Allow free Web size downloads</span>
             </div>
@@ -372,7 +339,7 @@ const CreateCollectionPage = () => {
               >
                 Gallery Styling Options
               </label>
-              <Input
+              <input
                 type="text"
                 className="mt-2 w-full h-[65px] p-5 bg-[#FCFCFC]"
                 placeholder=""
@@ -407,6 +374,7 @@ const CreateCollectionPage = () => {
           </div>
         </form>
       </div>
+      {/*  */}
       <div className="w-[65%] md-lg-max:w-full bg-[#F0F0F0] flex flex-col px-10 pb-16 ">
         {editMode ? (
           <div className="flex flex-col items-center w-full mt-8">
@@ -423,72 +391,11 @@ const CreateCollectionPage = () => {
                 </span>
               </div>
             </div>
-
-            <div className="flex flex-col w-full mt-7">
-              <div className="flex justify-between items-center w-full">
-                <span className="text-base font-semibold">WEDDING</span>
-                <div className="text-xs text-[#4B797A] ">
-                  <span className="ml-4">Delete</span>
-                  <span className="ml-4">Hide</span>
-                  <span className="ml-4">Move</span>
-                  <span className="ml-4">Copy</span>
-                </div>
-              </div>
-              <div className="grid grid-cols-6 gap-2 w-full md-xxs-min:grid-cols-2 md-xs-min:grid-cols-3 md-sm-min:grid-cols-3 md:justify-center md-md-min:grid-cols-4 md-lg-min:grid-cols-7 mt-5">
-                {[
-                  1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 1, 2, 3, 4, 5, 6, 7, 8,
-                  9, 10, 11, 12,
-                ].map((iter) => {
-                  return <GridItemOne iter={iter} />;
-                })}
-              </div>
-            </div>
-
+            {/* COLLECTIONS */}
+            {collections.map((collection) => (
+              <CollectionSet collectionName={collection} />
+            ))}
             {/*  */}
-
-            <div className="flex flex-col w-full mt-7">
-              <div className="flex justify-between items-center w-full">
-                <span className="text-base font-semibold">ENGAGEMENT</span>
-                <div className="text-xs text-[#4B797A] ">
-                  <span className="ml-4">Delete</span>
-                  <span className="ml-4">Hide</span>
-                  <span className="ml-4">Move</span>
-                  <span className="ml-4">Copy</span>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-6 gap-2 w-full md-xxs-min:grid-cols-2 md-xs-min:grid-cols-3 md-sm-min:grid-cols-3 md:justify-center md-md-min:grid-cols-4 md-lg-min:grid-cols-7 mt-5">
-                {[
-                  1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 1, 2, 3, 4, 5, 6, 7, 8,
-                  9, 10, 11, 12,
-                ].map((iter) => {
-                  return <GridItemOne iter={iter} />;
-                })}
-              </div>
-            </div>
-
-            {/*  */}
-
-            <div className="flex flex-col w-full mt-7">
-              <div className="flex justify-between items-center w-full">
-                <span className="text-base font-semibold">PRE-WEDDING</span>
-                <div className="text-xs text-[#4B797A] ">
-                  <span className="ml-4">Delete</span>
-                  <span className="ml-4">Hide</span>
-                  <span className="ml-4">Move</span>
-                  <span className="ml-4">Copy</span>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-6 gap-2 w-full md-xxs-min:grid-cols-2 md-xs-min:grid-cols-3 md-sm-min:grid-cols-3 md:justify-center md-md-min:grid-cols-4 md-lg-min:grid-cols-7 mt-5">
-                {[
-                  1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 1, 2, 3, 4, 5, 6, 7, 8,
-                  9, 10, 11, 12,
-                ].map((iter) => {
-                  return <GridItemOne iter={iter} />;
-                })}
-              </div>
-            </div>
           </div>
         ) : (
           <div className="h-[30%] w-full bg-[#919191] flex flex-col justify-end md-lg-max:h-[400px]">

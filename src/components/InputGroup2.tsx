@@ -14,6 +14,8 @@ type InputGroup2 = {
 };
 const InputGroup2 = ({ label, dataArray, infoType }: InputGroup2) => {
   const [isNewAddition, setIsNewAddition] = useState(false);
+  const [dataArrayState, setDataArrayState] = useState(dataArray);
+  console.log("ORIGIN DATA ARRAY STATE ---> ", dataArrayState);
   return (
     // <div className={`w-full mt-2 ${isEditMode && "mb-8"}`}>
     <div className={`w-full mt-2 `}>
@@ -27,21 +29,27 @@ const InputGroup2 = ({ label, dataArray, infoType }: InputGroup2) => {
             setIsNewAddition(!isNewAddition);
           }}
         >
-          {!isNewAddition ? <FaPlus size={20} /> : <MdCancel size={20} />}
+          {isNewAddition ? <MdCancel size={20} /> : <FaPlus size={20} />}
         </span>
       </div>
-      {dataArray.map((item) => {
+      {dataArrayState.map((item) => {
         return (
           <SubInputGroup2
+            // infoType={infoType === "name" ? "name" : "email"}
             inputValue={infoType === "name" ? item.name : item.email}
+            setDataArrayState={setDataArrayState}
+            setIsNewAddition={setIsNewAddition}
           />
         );
       })}
 
       {isNewAddition && (
         <SubInputGroup2
+          // infoType={infoType === "name" ? "name" : "email"}
           inputValue="New Client Name"
           isNewAddition={isNewAddition}
+          setDataArrayState={setDataArrayState}
+          setIsNewAddition={setIsNewAddition}
         />
       )}
     </div>

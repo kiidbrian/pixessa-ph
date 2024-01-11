@@ -2,11 +2,27 @@ import { useState } from "react";
 import { LuPenLine } from "react-icons/lu";
 
 type SubInputGroup2 = {
+  // infoType: "name" | "email";
   inputValue: string;
   isNewAddition?: boolean;
+  setDataArrayState: React.Dispatch<
+    React.SetStateAction<
+      {
+        email: string;
+        name: string;
+      }[]
+    >
+  >;
+  setIsNewAddition: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const SubInputGroup2 = ({ inputValue, isNewAddition }: SubInputGroup2) => {
+const SubInputGroup2 = ({
+  // infoType,
+  inputValue,
+  isNewAddition,
+  setDataArrayState,
+  setIsNewAddition,
+}: SubInputGroup2) => {
   const handleIsNewAddition = () => {
     if (isNewAddition) {
       return true;
@@ -38,6 +54,11 @@ const SubInputGroup2 = ({ inputValue, isNewAddition }: SubInputGroup2) => {
             className="text-xs text-[#4B797A] absolute -bottom-7 right-1 cursor-pointer"
             onClick={() => {
               setIsEditMode(!isEditMode);
+              setIsNewAddition(false);
+              setDataArrayState((prev) => {
+                console.log("PREV DATA ARRAY ----> ", prev);
+                return [...prev, { email: newInput, name: newInput }];
+              });
             }}
           >
             <span className="text-base ">+</span> Save

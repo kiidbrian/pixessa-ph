@@ -81,6 +81,7 @@ const WelcomePage = () => {
           </form>
         </div>
       </div>
+      {/* <a target="_blank" href="https://icons8.com/icon/QjevEgcJ4fyT/loading-circle">Loading Circle</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a> */}
     </div>
   );
 };
